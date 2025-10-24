@@ -1,0 +1,39 @@
+///$tab SUB.StoreNDrop
+
+/*******************************************************************************************************/
+
+
+Sub StoreNDrop (pTableName, pQvdDir)
+	
+	/*
+	
+	----------------------------------------------------------------------------------------------------
+	    SUBROUTINE: StoreNDrop
+	----------------------------------------------------------------------------------------------------
+	
+	    PURPOSE:
+	        Stores a specified table into a QVD file and immediately drops it from memory.
+	
+	    PARAMETERS:
+	        pTableName : Name of the table to store and drop.
+	        pQvdDir    : Target directory path where the QVD will be saved.
+	
+	    DESCRIPTION:
+	        Executes a STORE statement to persist the table as <pQvdDir>/<pTableName>.qvd,
+	        then removes the table from the data model to free memory.
+	
+	    USAGE EXAMPLE:
+	        CALL StoreNDrop('SalesData', 'lib://QVD_Sales');
+	        // → Stores SalesData into lib://QVD_Sales/SalesData.qvd and drops the table.
+	        
+	----------------------------------------------------------------------------------------------------
+	
+	*/ 
+	
+
+	Store $(pTableName) Into [$(pQvdDir)/$(pTableName).qvd] (qvd);
+	Drop Table $(pTableName);
+
+End Sub
+
+/*******************************************************************************************************/
