@@ -1,4 +1,70 @@
 ///$tab AutoCalendar
+/******************************************************************************************************
+
+    MODULE:        [Cal] – AutoCalendar Definition
+    VERSION:       1.0.0
+    AUTHOR:        Stragittus / Eric Mertens
+    DATE:          2025-11-06
+
+------------------------------------------------------------------------------------------------------
+    PURPOSE
+        Defines a reusable AutoCalendar field definition to derive all standard calendar
+        attributes (Year, Quarter, Month, Week, Date, etc.) from one or more date fields
+        in your data model. 
+
+        The calendar fields are generated dynamically through the
+        `DERIVE FIELDS FROM FIELDS` statement, enabling consistent and automated
+        temporal analysis across all applications.
+
+------------------------------------------------------------------------------------------------------
+    DESCRIPTION
+        • The script defines a DECLARE FIELD DEFINITION named [Cal].
+        • It uses Qlik’s `$1` placeholder as the input date expression.
+        • Each derived field is tagged for semantic grouping and standardized naming.
+
+        Key derived attributes:
+            - Year, YearNr, YearQuarter, YearMonth, YearWeek
+            - Quarter, Month, Week, Date
+            - Relative metrics: InYTD, InQTD, InMTD, InWTD
+            - Temporal offsets: DaysAgo, WeeksAgo, MonthsAgo, QuartersAgo, YearsAgo
+
+        Each field is tagged with relevant `$` tags (e.g. `$axis`, `$date`, `$month`, `$yearquarter`)
+        for better field categorization and usability in Qlik’s Smart Search, Insight Advisor,
+        and chart dimensions.
+
+------------------------------------------------------------------------------------------------------
+    USAGE
+        After this block is declared, calendar fields are derived as follows:
+
+            DERIVE FIELDS FROM FIELDS
+                [YourDateField]
+            USING
+                [Cal];
+
+        Example:
+            DERIVE FIELDS FROM FIELDS
+                [Activity.Date]
+            USING
+                [Cal];
+
+        Replace `[Activity.Date]` with the specific date field(s) relevant to your data model,
+        such as `[OrderDate]`, `[InvoiceDate]`, `[TransactionDate]`, etc.
+
+------------------------------------------------------------------------------------------------------
+    DEPENDENCIES
+        • Requires Qlik Sense Enterprise or SaaS (Qlik Engine ≥ 12.10)
+        • No external libraries or QVDs needed
+        • The `$1` placeholder is automatically substituted by the source date field
+
+------------------------------------------------------------------------------------------------------
+    CHANGE LOG
+        v1.0.0 - Initial version including Year/Quarter/Month/Week hierarchy and relative metrics.
+
+------------------------------------------------------------------------------------------------------
+
+******************************************************************************************************/
+
+
 [Cal]: 
   DECLARE FIELD DEFINITION Tagged ('$date')
 FIELDS
